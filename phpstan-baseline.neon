@@ -1,0 +1,253 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined static method Search\:\:makeTextSearch\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: ajax/dropdownValue.php
+
+		-
+			message: '#^Call to an undefined static method Toolbox\:\:decodeArrayFromInput\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: ajax/dropdownValue.php
+
+		-
+			message: '#^Call to an undefined static method Session\:\:getNewCSRFToken\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: ajax/get_new_crsf_token.php
+
+		-
+			message: '#^Instantiated class GlpiPlugin\\Resources\\Resource not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: front/geoloc.php
+
+		-
+			message: '#^Instantiated class Glpi\\Exception\\Http\\BadRequestHttpException not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: front/map.php
+
+		-
+			message: '#^Call to an undefined static method Toolbox\:\:getFileAsResponse\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: front/map.send.php
+
+		-
+			message: '#^Instantiated class Glpi\\Exception\\Http\\BadRequestHttpException not found\.$#'
+			identifier: class.notFound
+			count: 5
+			path: front/map.send.php
+
+		-
+			message: '#^Instantiated class Glpi\\Exception\\Http\\BadRequestHttpException not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: front/position.php
+
+		-
+			message: '#^Instantiated class Glpi\\Socket not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: front/showinfos.php
+
+		-
+			message: '#^Call to an undefined static method CommonGLPI\:\:registerStandardTab\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: hook.php
+
+		-
+			message: '#^Call to an undefined static method Search\:\:getOptions\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: hook.php
+
+		-
+			message: '#^Call to an undefined static method Toolbox\:\:deleteDir\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: hook.php
+
+		-
+			message: '#^Function Safe\\mkdir not found\.$#'
+			identifier: function.notFound
+			count: 2
+			path: hook.php
+
+		-
+			message: '#^Used function Safe\\mkdir not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: hook.php
+
+		-
+			message: '#^Call to an undefined static method Dropdown\:\:showNumber\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: src/Config.php
+
+		-
+			message: '#^Call to an undefined static method Html\:\:requireJs\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/ImageItem.php
+
+		-
+			message: '#^Class GlpiPlugin\\Resources\\Resource not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/ImageItem.php
+
+		-
+			message: '#^Call to an undefined static method Html\:\:formatNumber\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Info.php
+
+		-
+			message: '#^Call to an undefined static method Html\:\:textarea\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Info.php
+
+		-
+			message: '#^Class GlpiPlugin\\Resources\\Resource not found\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Info.php
+
+		-
+			message: '#^Method GlpiPlugin\\Positions\\Info\:\:getCallValue\(\) should return string but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/Info.php
+
+		-
+			message: '#^Method GlpiPlugin\\Positions\\Info\:\:showItemtype\(\) should return GlpiPlugin\\Positions\\nothing but return statement is missing\.$#'
+			identifier: return.missing
+			count: 2
+			path: src/Info.php
+
+		-
+			message: '#^Array has 2 duplicate keys with value ''outlineWidth'' \("outlineWidth", "outlineWidth"\)\.$#'
+			identifier: array.duplicateKey
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Call to an undefined static method Html\:\:displayBackLink\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Call to an undefined static method Html\:\:requireJs\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Call to an undefined static method Session\:\:getNewCSRFToken\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Call to an undefined static method Session\:\:isMultiEntitiesMode\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 3
+			path: src/Position.php
+
+		-
+			message: '#^Call to static method getResourceName\(\) on an unknown class GlpiPlugin\\Resources\\Resource\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Class Computer not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Class GlpiPlugin\\Resources\\Resource not found\.$#'
+			identifier: class.notFound
+			count: 11
+			path: src/Position.php
+
+		-
+			message: '#^Class Glpi\\Socket not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Class Monitor not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Class NetworkEquipment not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Class PassiveDCEquipment not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Class Peripheral not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Class Phone not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Class Printer not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Class Rack not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Instantiated class GlpiPlugin\\Resources\\Resource not found\.$#'
+			identifier: class.notFound
+			count: 5
+			path: src/Position.php
+
+		-
+			message: '#^Instantiated class Glpi\\Socket not found\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Position.php
+
+		-
+			message: '#^Method GlpiPlugin\\Positions\\Position\:\:sendFile\(\) should return GlpiPlugin\\Positions\\nothing but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/Position.php
+
+		-
+			message: '#^Method GlpiPlugin\\Positions\\Profile\:\:migrateOneProfile\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/Profile.php
