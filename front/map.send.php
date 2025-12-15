@@ -39,10 +39,10 @@ if (isset($_GET['docid'])) { // docid for document
        throw new BadRequestHttpException(__('Unknown file'));
    }
 
-   if (!file_exists(GLPI_DOC_DIR . "/" . $doc->fields['filepath'])) {
+   if (!file_exists(GLPI_DOC_DIR . "/" . $doc->fields['filepath'] ?? '')) {
        throw new BadRequestHttpException(__('File not found')); // Not found
    }
-   if ($doc->fields['sha1sum'] && $doc->fields['sha1sum'] != sha1_file(GLPI_DOC_DIR . "/" . $doc->fields['filepath'])) {
+   if ($doc->fields['sha1sum'] ?? '' && $doc->fields['sha1sum'] ?? '' != sha1_file(GLPI_DOC_DIR . "/" . $doc->fields['filepath'] ?? '')) {
        throw new BadRequestHttpException(__('File is altered (bad checksum)')); // Doc alterated
    } else {
       return $doc->getAsResponse();

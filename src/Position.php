@@ -220,8 +220,8 @@ class Position extends CommonDBTM
         $config = new Config();
         $config->getFromDB(1);
 
-        $input['width'] = $config->fields['default_width'];
-        $input['height'] = $config->fields['default_height'];
+        $input['width'] = $config->fields['default_width'] ?? '';
+        $input['height'] = $config->fields['default_height'] ?? '';
 
         $input = $this->checkValues($input);
 
@@ -388,7 +388,7 @@ class Position extends CommonDBTM
     //   function cleanDBonPurge() {
     //      // If a position item is deleted from the canvas : remove the picture linked
     //      $doc_item = new Document_Item();
-    //      $doc_found = $doc_item->find("`items_id` = '".$this->fields['items_id']."' AND `itemtype` = '".$this->fields['itemtype']."'", '`date_mod` DESC', '1');
+    //      $doc_found = $doc_item->find("`items_id` = '".$this->fields['items_id'] ?? ''."' AND `itemtype` = '".$this->fields['itemtype'] ?? ''."'", '`date_mod` DESC', '1');
     //      $doc_item->delete(array('id' => key($doc_found)), 1);
     //   }
 
@@ -401,7 +401,7 @@ class Position extends CommonDBTM
     {
         return "SELECT `itemtype`, `items_id`
            FROM `glpi_plugin_positions_positions`
-           WHERE `id`='" . $this->fields['id'] . "'";
+           WHERE `id`='" . $this->fields['id'] ?? '' . "'";
     }
 
     /**
@@ -598,7 +598,7 @@ class Position extends CommonDBTM
         } elseif ($input['test'] == "existLocation") {
             $loc = new Location();
             $loc->getFromDB($input['locations_id']);
-            $name = $loc->fields['name'];
+            $name = $loc->fields['name'] ?? '';
         }
 
         $document_id = $input['document_id'];
@@ -810,13 +810,13 @@ class Position extends CommonDBTM
 
         echo "<td>" . __('Name') . ": </td>";
         echo "<td>";
-        echo Html::input('name', ['value' => $this->fields['name'], 'size' => 40]);
+        echo Html::input('name', ['value' => $this->fields['name'] ?? '', 'size' => 40]);
         echo "</td>";
 
         echo "<td>" . __('Coordinate x', 'positions') . ": </td>";
         echo "<td>";
         if ($ID > 0) {
-            echo Html::input('x_coordinates', ['value' => $this->fields['x_coordinates'], 'size' => 10]);
+            echo Html::input('x_coordinates', ['value' => $this->fields['x_coordinates'] ?? '', 'size' => 10]);
         }
         echo "</td>";
 
@@ -828,24 +828,24 @@ class Position extends CommonDBTM
         echo "<td>";
 
         if ($ID < 0
-            || (!$this->fields['itemtype']
-                && !$this->fields['items_id'])
+            || (!$this->fields['itemtype'] ?? ''
+                && !$this->fields['items_id'] ?? '')
         ) {
             $types = self::getTypes();
 
             Dropdown::showSelectItemFromItemtypes(['items_id_name' => "items_id",
-                'entity_restrict' => ($this->fields['is_recursive'] ? -1 : $this->fields['entities_id']),
+                'entity_restrict' => ($this->fields['is_recursive'] ?? '' ? -1 : $this->fields['entities_id'] ?? ''),
                 'itemtypes' => $types,
             ]);
         } else {
-            if ($this->fields['itemtype']
-                && $this->fields['items_id']) {
-                if (class_exists($this->fields['itemtype'])) {
-                    $item = new $this->fields['itemtype']();
-                    $item->getFromDB($this->fields['items_id']);
+            if ($this->fields['itemtype'] ?? ''
+                && $this->fields['items_id'] ?? '') {
+                if (class_exists($this->fields['itemtype'] ?? '')) {
+                    $item = new $this->fields['itemtype'] ?? ''();
+                    $item->getFromDB($this->fields['items_id'] ?? '');
                     echo $item->getTypeName() . " - ";
                     echo $item->getLink() . " - ";
-                    echo Dropdown::getDropdownName("glpi_locations", $item->fields['locations_id']);
+                    echo Dropdown::getDropdownName("glpi_locations", $item->fields['locations_id'] ?? '');
                 }
             }
         }
@@ -854,7 +854,7 @@ class Position extends CommonDBTM
         echo "<td>" . __('Coordinate y', 'positions') . ": </td>";
         echo "<td>";
         if ($ID > 0) {
-            echo Html::input('y_coordinates', ['value' => $this->fields['y_coordinates'], 'size' => 10]);
+            echo Html::input('y_coordinates', ['value' => $this->fields['y_coordinates'] ?? '', 'size' => 10]);
         }
         echo "</td>";
 
@@ -953,7 +953,7 @@ class Position extends CommonDBTM
             $self = new self();
             $self->getFromDB($options["id"]);
             if (isset($self->fields["itemtype"])) {
-                $options['locations_id'] = $self->fields['locations_id'];
+                $options['locations_id'] = $self->fields['locations_id'] ?? '';
             }
         }
 
@@ -1280,7 +1280,7 @@ class Position extends CommonDBTM
                                 "shape" => $val['shape']];
 
                             if (Plugin::isPluginActive("resources") && ($val['itemtype'] == Resource::class)) {
-                                $val['picture'] = $itemclass->fields['picture'];
+                                $val['picture'] = $itemclass->fields['picture'] ?? '';
                                 $options['img'] = $CFG_GLPI['url_base'] . PLUGIN_RESOURCES_WEBDIR . '/pics/nobody.png';
                                 if (!($val['picture'] == null)) {
                                     $options['img'] = $CFG_GLPI['url_base'] . PLUGIN_RESOURCES_WEBDIR . '/front/picture.send.php?file=' . $val['picture'];
@@ -1531,7 +1531,7 @@ class Position extends CommonDBTM
             if ($itemclass->getType() == 'Phone') {
                 $height = $height + 80;
             } elseif ($itemclass->getType() == Resource::class) {
-                $resID = $itemclass->fields['id'];
+                $resID = $itemclass->fields['id'] ?? '';
                 $restrict = ["plugin_resources_resources_id" => $resID,
                     "itemtype" => 'User'];
                 $dbu = new DbUtils();
@@ -1540,7 +1540,7 @@ class Position extends CommonDBTM
                     foreach ($datas as $data) {
                         if (isset($data['items_id']) && ($data['items_id'] > 0)) {
                             $userid = $data['items_id'];
-                            $entitiesID = $itemclass->fields['entities_id'];
+                            $entitiesID = $itemclass->fields['entities_id'] ?? '';
                             $condition = ["users_id" => $userid,
                                 "is_deleted" => 0,
                                 "is_template" => 0,
@@ -1821,8 +1821,8 @@ class Position extends CommonDBTM
                     $positions_id = $data['id'];
                 }
             }
-            $documents_id = self::getDocument($item->fields['locations_id']);
-            $locations_id = $item->fields['locations_id'];
+            $documents_id = self::getDocument($item->fields['locations_id'] ?? '');
+            $locations_id = $item->fields['locations_id'] ?? '';
         } else {
             if (Plugin::isPluginActive("resources")) {
                 //recherche de la ressource lie a ce user
@@ -1839,17 +1839,17 @@ class Position extends CommonDBTM
 
                             $restrict = ["items_id" => $ressource->getID(),
                                 "is_deleted" => 0,
-                                "entities_id" => $ressource->fields['entities_id'],
+                                "entities_id" => $ressource->fields['entities_id'] ?? '',
                                 "itemtype" => Resource::class];
                             $datas = $dbu->getAllDataFromTable('glpi_plugin_positions_positions', $restrict);
                             if (!empty($datas)) {
                                 foreach ($datas as $data) {
                                     if (isset($data['id'])) {
                                         if (isset($ressource->fields['locations_id'])
-                                            && ($ressource->fields['locations_id'] > 0)) {
-                                            $documents_id = self::getDocument($ressource->fields['locations_id']);
+                                            && ($ressource->fields['locations_id'] ?? '' > 0)) {
+                                            $documents_id = self::getDocument($ressource->fields['locations_id'] ?? '');
                                             $positions_id = $data['id'];
-                                            $locations_id = $ressource->fields['locations_id'];
+                                            $locations_id = $ressource->fields['locations_id'] ?? '';
                                         }
                                     }
                                 }
@@ -1859,19 +1859,19 @@ class Position extends CommonDBTM
                 } else {
                     $ressource = new Resource();
                     if ($ressource->getFromDB($id)) {
-                        $restrict = ["items_id" => $ressource->fields['id'],
+                        $restrict = ["items_id" => $ressource->fields['id'] ?? '',
                             "is_deleted" => 0,
-                            "entities_id" => $ressource->fields['entities_id'],
+                            "entities_id" => $ressource->fields['entities_id'] ?? '',
                             "itemtype" => $ressource->getType()];
                         $datas = $dbu->getAllDataFromTable('glpi_plugin_positions_positions', $restrict);
                         if (!empty($datas)) {
                             foreach ($datas as $data) {
                                 if (isset($data['id'])) {
                                     if (isset($ressource->fields['locations_id'])
-                                        && ($ressource->fields['locations_id'] > 0)) {
-                                        $documents_id = self::getDocument($ressource->fields['locations_id']);
+                                        && ($ressource->fields['locations_id'] ?? '' > 0)) {
+                                        $documents_id = self::getDocument($ressource->fields['locations_id'] ?? '');
                                         $positions_id = $data['id'];
-                                        $locations_id = $ressource->fields['locations_id'];
+                                        $locations_id = $ressource->fields['locations_id'] ?? '';
                                     }
                                 }
                             }
@@ -1903,8 +1903,8 @@ class Position extends CommonDBTM
             $position = new Position();
             $position->getFromDBByCrit(['itemtype' => $itemtype,
                 'items_id' => $id]);
-            $documents_id = self::getDocument($position->fields['locations_id']);
-            $locations_id = $position->fields['locations_id'];
+            $documents_id = self::getDocument($position->fields['locations_id'] ?? '');
+            $locations_id = $position->fields['locations_id'] ?? '';
         } else {
             //si plugin ressource active
             if (Plugin::isPluginActive("resources")) {
@@ -1922,14 +1922,14 @@ class Position extends CommonDBTM
 
                             $restrict = ["items_id" => $ressource->getID(),
                                 "is_deleted" => 0,
-                                "entities_id" => $ressource->fields['entities_id'],
+                                "entities_id" => $ressource->fields['entities_id'] ?? '',
                                 "itemtype" => Resource::class];
                             $datas = $dbu->getAllDataFromTable('glpi_plugin_positions_positions', $restrict);
                             if (!empty($datas)) {
                                 foreach ($datas as $data) {
                                     if (isset($data['id'])) {
                                         if (isset($ressource->fields['locations_id'])
-                                            && ($ressource->fields['locations_id'] > 0)) {
+                                            && ($ressource->fields['locations_id'] ?? '' > 0)) {
                                             $documents_id = self::getDocument($data['locations_id']);
                                             $positions_id = $data['id'];
                                             $locations_id = $data['locations_id'];
@@ -1942,9 +1942,9 @@ class Position extends CommonDBTM
                 } else {
                     $ressource = new Resource();
                     if ($ressource->getFromDB($id)) {
-                        $restrict = ["items_id" => $ressource->fields['id'],
+                        $restrict = ["items_id" => $ressource->fields['id'] ?? '',
                             "is_deleted" => 0,
-                            "entities_id" => $ressource->fields['entities_id'],
+                            "entities_id" => $ressource->fields['entities_id'] ?? '',
                             "itemtype" => $ressource->getType()];
                         $datas = $dbu->getAllDataFromTable('glpi_plugin_positions_positions', $restrict);
                         if (!empty($datas)) {

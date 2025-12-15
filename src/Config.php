@@ -84,7 +84,7 @@ class Config extends CommonDBTM
         echo __('Add sub-places on the map objects', 'positions');
         echo "</td>";
         echo "<td>";
-        Dropdown::showYesNo('use_view_all_object', $config->fields['use_view_all_object']);
+        Dropdown::showYesNo('use_view_all_object', $config->fields['use_view_all_object'] ?? '');
         echo "</td></tr>";
         echo "<tr class='tab_bg_1'>";
         echo "<td>";
@@ -93,7 +93,7 @@ class Config extends CommonDBTM
         echo "<td>";
         Dropdown::showNumber('default_width', ['min'   => 1,
                                              'max'   => 300,
-                                             'value' => $config->fields['default_width']]);
+                                             'value' => $config->fields['default_width'] ?? '']);
         echo "</td></tr>";
         echo "<tr class='tab_bg_1'>";
         echo "<td>";
@@ -102,7 +102,7 @@ class Config extends CommonDBTM
         echo "<td>";
         Dropdown::showNumber('default_height', ['min'   => 1,
                                               'max'   => 300,
-                                              'value' => $config->fields['default_height']]);
+                                              'value' => $config->fields['default_height'] ?? '']);
         echo "</td></tr>";
 
         echo "<tr><th colspan='2'>";

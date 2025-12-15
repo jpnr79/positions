@@ -184,7 +184,7 @@ class Info extends CommonDBTM {
       echo "<tr class='tab_bg_1'>";
       echo "<td>" . __('Name') . "&nbsp;:</td>";
       echo "<td>";
-      echo Html::input('name', ['value' => $this->fields['name'], 'size' => 40]);
+      echo Html::input('name', ['value' => $this->fields['name'] ?? '', 'size' => 40]);
       echo "</td>";
       echo "<td rowspan='5'>" . __('Comments') . "&nbsp;:</td>";
       echo "<td rowspan='5'>";
@@ -200,13 +200,13 @@ class Info extends CommonDBTM {
 
       echo "<tr class='tab_bg_1'><td>" . __('Active') . "&nbsp;:</td>";
       echo "<td>";
-      Dropdown::showYesNo('is_active', $this->fields['is_active']);
+      Dropdown::showYesNo('is_active', $this->fields['is_active'] ?? '');
       echo "</td></tr>";
 
       echo "<tr class='tab_bg_1'><td>" . __('Displayed fields', 'positions') . "&nbsp;:</td>";
       echo "<td>";
 
-      $this->showItemtype($ID, $this->fields['itemtype']);
+      $this->showItemtype($ID, $this->fields['itemtype'] ?? '');
 
       echo "</td>";
       echo "</tr>";
@@ -245,9 +245,9 @@ class Info extends CommonDBTM {
 
       //Criteria already added : only display the selected itemtype
       if ($ID > 0) {
-         $item = new $this->fields['itemtype']();
+         $item = new $this->fields['itemtype'] ?? ''();
          echo $item->getTypeName();
-         echo Html::hidden('itemtype', ['value' => $this->fields['itemtype']]);
+         echo Html::hidden('itemtype', ['value' => $this->fields['itemtype'] ?? '']);
 
       } else {
 
@@ -303,7 +303,7 @@ class Info extends CommonDBTM {
 
       echo "<span id='span_fields' name='span_fields'>";
 
-      if (!isset($config->fields['itemtype']) || !$config->fields['itemtype']) {
+      if (!isset($config->fields['itemtype']) || !$config->fields['itemtype'] ?? '') {
          echo "</span>";
          return;
       }
@@ -312,16 +312,16 @@ class Info extends CommonDBTM {
          $config->fields['entities_id'] = $_SESSION['glpiactive_entity'];
       }
 
-      $config_fields = explode(',', $config->fields['fields']);
+      $config_fields = explode(',', $config->fields['fields'] ?? '');
       //Search option for this type
-      $item = new $config->fields['itemtype']();
+      $item = new $config->fields['itemtype'] ?? ''();
 
       //Construct list
       echo "<span id='span_fields' name='span_fields'>";
       echo "<select name='_fields[]' multiple size='15' style='width:400px'>";
 
       $dbu = new DbUtils();
-      foreach ($DB->listFields($dbu->getTableForItemType($config->fields['itemtype'])) as $field) {
+      foreach ($DB->listFields($dbu->getTableForItemType($config->fields['itemtype'] ?? '')) as $field) {
 
          $searchOption = $item->getSearchOptionByField('field', $field['Field'],
                                                        $dbu->getTableForItemType($item->getType()));
@@ -338,7 +338,7 @@ class Info extends CommonDBTM {
          }
 
          if (!empty($searchOption)
-             && !in_array($field['Field'], self::getUnallowedFields($config->fields['itemtype']))) {
+             && !in_array($field['Field'], self::getUnallowedFields($config->fields['itemtype'] ?? ''))) {
 
             echo "<option value='" . $field['Field'] . "'";
             if (isset($config_fields) && in_array($field['Field'], $config_fields)) {
@@ -682,8 +682,8 @@ class Info extends CommonDBTM {
       $display = "";
       switch ($itemclass->getType()) {
          case Resource::class :
-            $resID      = $itemclass->fields['id'];
-            $entitiesID = $itemclass->fields['entities_id'];
+            $resID      = $itemclass->fields['id'] ?? '';
+            $entitiesID = $itemclass->fields['entities_id'] ?? '';
             $restrict   = ["plugin_resources_resources_id" => $resID,
                            "itemtype" => 'User'];
             $dbu        = new DbUtils();
