@@ -124,7 +124,7 @@ class ImageItem extends CommonDBTM
         if ($values["type"] != '-1') {
             if ($this->getFromDBByCrit(['itemtype' => $values["itemtype"],
              'type'     => $values["type"]])) {
-                $this->update(['id'  => $this->fields['id'] ?? '',
+                $this->update(['id'  => (($this->fields['id'] ?? '')),
                            'img' => $values["img"]]);
             } else {
                 $this->add(['itemtype' => $values["itemtype"],
@@ -142,7 +142,7 @@ class ImageItem extends CommonDBTM
                 $type_table = $DB->result($result, $i, "id");
                 if ($this->getFromDBByCrit(['itemtype' => $values["itemtype"],
                 'type'     => $type_table])) {
-                    $this->update(['id'  => $this->fields['id'] ?? '',
+                    $this->update(['id'  => (($this->fields['id'] ?? '')),
                               'img' => $values["img"]]);
                 } else {
                     $this->add(['itemtype' => $values["itemtype"],

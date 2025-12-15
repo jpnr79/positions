@@ -99,7 +99,7 @@ $multi = false;
 
 if (isset($_GET["name"]) && $_GET["name"] != "type") {
     $dbu = new DbUtils();
-    if (!$config->fields['use_view_all_object'] ?? '') {
+    if (!(($config->fields['use_view_all_object'] ?? ''))) {
         if ($_GET['locations_id'] != -1) {
             $where .= " AND `locations_id` = '" . $_GET['locations_id'] . "'";
         }
@@ -148,7 +148,7 @@ if ($_GET['searchText'] != '__VALUE__' && $_GET['searchText']!=$CFG_GLPI["ajax_w
 $query = "SELECT *
           FROM `".$_GET['table']."`
           $where ";
-if ($config->fields['use_view_all_object'] ?? '' && $_GET["name"] != "type") {
+if ((($config->fields['use_view_all_object'] ?? '')) && $_GET["name"] != "type") {
     $query .= "ORDER BY `locations_id`";
 } else {
     if ($multi) {
@@ -177,7 +177,7 @@ if (!empty($output)&&$output!="&nbsp;") {
 
 
 if ($number) {
-    if ($config->fields['use_view_all_object'] ?? '' && $_GET["name"] != "type") {
+    if ((($config->fields['use_view_all_object'] ?? '')) && $_GET["name"] != "type") {
         $current_location = '';
         while ($data =$DB->fetchArray($result)) {
             if (empty($current_location)) {
@@ -185,8 +185,8 @@ if ($number) {
                 $level = 1;
                 $current_location = new Location();
                 $current_location->getFromDB($data['locations_id']);
-            } elseif ($current_location->fields['id'] ?? '' != $data['locations_id']) {
-                array_push($out, ['text' => $current_location->fields['completename'] ?? '', 'children' => $children]);
+            } elseif ((($current_location->fields['id'] ?? '')) != $data['locations_id']) {
+                array_push($out, ['text' => (($current_location->fields['completename'] ?? '')), 'children' => $children]);
 
                 $children = [];
                 $level = 1;
@@ -202,7 +202,7 @@ if ($number) {
             array_push($children, ['id' => $_GET['itemtype'].";".$ID, 'text' => $output, 'level' => '1']);
             $level++;
         }
-        array_push($out, ['text' => $current_location->fields['completename'] ?? '', 'children' => $children]);
+        array_push($out, ['text' => (($current_location->fields['completename'] ?? '')), 'children' => $children]);
     } else {
         while ($data =$DB->fetchArray($result)) {
             $output = $data[$field];

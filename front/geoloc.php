@@ -49,18 +49,18 @@ if (isset($_GET["users_id"])) {
             $ressource     = new Resource();
             $ressource->getFromDB($info['plugin_resources_resources_id']);
 
-            $restrict = ["items_id"    => $ressource->fields['id'] ?? '',
+            $restrict = ["items_id"    => (($ressource->fields['id'] ?? '')),
                          "is_deleted"  => 0,
-                         "entities_id" => $ressource->fields['entities_id'] ?? '',
+                         "entities_id" => (($ressource->fields['entities_id'] ?? '')),
                          "itemtype"    => $ressource->getType()];
             $datas    = $dbu->getAllDataFromTable('glpi_plugin_positions_positions', $restrict);
             if (!empty($datas)) {
                foreach ($datas as $data) {
                   if (isset($data['id'])) {
                      if (isset($ressource->fields['locations_id'])
-                                 && ($ressource->fields['locations_id'] ?? ''>0)) {
+                                 && ((($ressource->fields['locations_id'] ?? ''))>0)) {
                         $id            = $data['id'];
-                        $locations_id  = $ressource->fields['locations_id'] ?? '';
+                        $locations_id  = (($ressource->fields['locations_id'] ?? ''));
                         $itemtype      = 'User';
                         $menuoff       = 1;
                         $download      = 1;
